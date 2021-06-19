@@ -1,0 +1,13 @@
+C:/mingw64/x86_64-w64-mingw32/lib/libglew32.dll.a
+C:/mingw64/x86_64-w64-mingw32/bin/glew32.dll
+C:/mingw64/x86_64-w64-mingw32/lib/libglew32.a
+C:/mingw64/x86_64-w64-mingw32/bin/glewinfo.exe
+C:/mingw64/x86_64-w64-mingw32/bin/visualinfo.exe
+C:/mingw64/x86_64-w64-mingw32/lib/pkgconfig/glew.pc
+C:/mingw64/x86_64-w64-mingw32/include/GL/wglew.h
+C:/mingw64/x86_64-w64-mingw32/include/GL/glew.h
+C:/mingw64/x86_64-w64-mingw32/include/GL/glxew.h
+C:/mingw64/x86_64-w64-mingw32/lib/cmake/glew/glew-targets.cmake
+C:/mingw64/x86_64-w64-mingw32/lib/cmake/glew/glew-targets-release.cmake
+C:/mingw64/x86_64-w64-mingw32/lib/cmake/glew/glew-config.cmake
+C:/mingw64/x86_64-w64-mingw32/lib/cmake/glew/CopyImportedTargetProperties.cmake
