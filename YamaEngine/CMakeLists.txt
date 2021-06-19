@@ -34,20 +34,11 @@ target_include_directories(YamaEngine
 )
 
 # Link GLEW
-if(MSVC_VERSION GREATER_EQUAL 1920)
-    # Visual Studio 2019 returns glewContextInit unresolved error 
-    # using the GCC method to add GLEW, so this is a workaround
-    set(GLEW_USE_STATIC_LIBS ON)
-    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glew)
-    find_package(GLEW REQUIRED)
-    target_link_libraries(YamaEngine GLEW::glew_s)
-else()
-    # GCC compiler can't use FindGLEW, so we're doing it manually
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glew/build/cmake)
-    target_include_directories(YamaEngine 
-    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glew/include)
-    target_link_libraries(YamaEngine glew_s)
-endif()
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glew/build/cmake)
+target_include_directories(YamaEngine 
+PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glew/include)
+target_link_libraries(YamaEngine glew_s)
+
 
 # Link GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)

@@ -3,6 +3,7 @@
 build/
 CMakeFiles
 CMakeScripts
+.dummy/
 
 # Files
 CMakeSettings.json
