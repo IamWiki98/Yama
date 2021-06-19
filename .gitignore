@@ -1,0 +1,13 @@
+# Directories
+.vscode/
+build/
+CMakeFiles
+CMakeScripts
+
+# Files
+CMakeSettings.json
+*.html
+*.doc
+CMakeCache.txt
+Makefile
+cmake_install.cmake
