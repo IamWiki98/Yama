@@ -14,13 +14,11 @@ set( SOURCE_FILES
     Source/Yama/Application.cpp
 )
 
-include(GenerateExportHeader)
 # Add source to this project's executable.
 add_library (YamaEngine SHARED
     ${HEADER_FILES}
     ${SOURCE_FILES}
 )
-generate_export_header(YamaEngine)
 
 if(WIN32)
     target_compile_definitions(YamaEngine 
