@@ -1,9 +1,13 @@
 # Directories
 .vscode/
-build/
+/build/
 CMakeFiles
 CMakeScripts
 .dummy/
+tmp/
+vc6/
+vc10/
+vc12/
 
 # Files
 CMakeSettings.json
@@ -12,3 +16,4 @@ CMakeSettings.json
 CMakeCache.txt
 Makefile
 cmake_install.cmake
+.gitignore
