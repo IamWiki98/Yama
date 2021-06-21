@@ -36,7 +36,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glew/build/cmake)
 target_include_directories(YamaEngine 
 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glew/include)
 target_link_libraries(YamaEngine glew_s)
-
+set_property(TARGET glew_s PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Link GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
