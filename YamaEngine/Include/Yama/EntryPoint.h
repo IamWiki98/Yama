@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef YM_PLATFORM_WINDOWS
-
 extern Yama::Application* Yama::Create();
 
 int main(int argc, char** argv)
@@ -10,7 +8,3 @@ int main(int argc, char** argv)
     app->Run();
     delete app;
 }
-
-#else
-
-#endif
