@@ -15,6 +15,6 @@ namespace Yama
     };
 
     // Needs to be defined in client
-    Application* Create();
+    Application* CreateApplication();
 
 }

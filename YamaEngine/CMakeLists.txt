@@ -2,7 +2,7 @@
 # project specific logic here.
 #
 cmake_minimum_required (VERSION 3.8)
-set(CMAKE_VERBOSE_MAKEFILE ON)
+
 set( HEADER_FILES
     "Include/Yama.h"
     "Include/Yama/Application.h"
@@ -32,9 +32,9 @@ target_include_directories(YamaEngine
 )
 
 # Link GLEW
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glew/build/cmake)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/glew/build/cmake)
 target_include_directories(YamaEngine 
-PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glew/include)
+PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/glew/include)
 target_link_libraries(YamaEngine glew_s)
 set_property(TARGET glew_s PROPERTY POSITION_INDEPENDENT_CODE ON)
 
@@ -43,7 +43,7 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glfw)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/glfw)
 
 target_link_libraries(YamaEngine glfw)
 
@@ -56,10 +56,10 @@ target_link_libraries(YamaEngine OpenGL::GL)
 # Link GLM
 
 target_include_directories(YamaEngine 
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glm
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/External/glm
 )
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glm)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/glm)
 
 # TODO: Add tests and install targets if needed.
 #install (TARGETS YamaEngine DESTINATION ${CMAKE_BINARY_DIR}/bin)

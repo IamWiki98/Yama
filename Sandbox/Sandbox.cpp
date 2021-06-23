@@ -14,7 +14,7 @@ public:
     }
 };
 
-Yama::Application* Yama::Create()
+Yama::Application* Yama::CreateApplication()
 {
     return new Sandbox();
 }
