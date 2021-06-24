@@ -63,3 +63,4 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/glm)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/spdlog)
 target_link_libraries(YamaEngine spdlog)
+set_property(TARGET spdlog PROPERTY POSITION_INDEPENDENT_CODE ON)
