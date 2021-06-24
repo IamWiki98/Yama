@@ -37,7 +37,7 @@ message("${Platform_SOURCES}")
 option(ENGINE_SHARED "" FALSE)
 
 # Create library and add sources
-if(TRUE)
+if(ENGINE_SHARED)
     message("Building shared library...")
     add_library (YamaEngine SHARED
         ${YamaEngine_HEADERS}
