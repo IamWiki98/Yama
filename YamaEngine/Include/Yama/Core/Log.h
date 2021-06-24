@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Yama/Core/Core.h"
+#include "Yama/Core/Common.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 #include <memory>

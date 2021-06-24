@@ -1,5 +1,10 @@
 #include "Yama/Core/Application.h"
 #include "Yama/Core/Log.h"
+#include "Yama/Events/Event.h"
+#include "Yama/Events/ApplicationEvent.h"
+#include "Yama/Events/MouseEvent.h"
+#include "Yama/Core/Window.h"
+#include "Yama/Core/Common.h"
 
 /*
 #ifndef GLEW_STATIC
@@ -10,14 +15,16 @@
 #include <GLFW/glfw3.h>
 */
 
-#include "Yama/Events/ApplicationEvent.h"
+
 namespace Yama
 {
-
+    
     Application::Application()
     {
         Log::Init();
         YM_CORE_INFO("Application constructed...");
+        m_Window = std::unique_ptr<Window>(Window::Create());
+        m_Window->SetEventCallback(BIND_EVENT_FN(Yama::Application::OnEvent));
     }
 
     Application::~Application()
@@ -27,20 +34,26 @@ namespace Yama
 
     void Application::Run()
     {
-        WindowResizedEvent e(1280, 720);
-        YM_TRACE(e);
-
         YM_CORE_INFO("Entering engine loop...");
-        while(true)
+        while(m_Running)
         {
-            
+            m_Window->OnUpdate();
         }
         YM_CORE_INFO("Exiting engine loop...");
     }
 
-    void Application::OnEvent() 
+    void Application::OnEvent(Event& e) 
     {
-        
+        YM_CORE_TRACE(e);
+        EventDispatcher dispatcher(e);
+
+        dispatcher.Dispatch<WindowClosedEvent>(BIND_EVENT_FN(Application::OnWindowClosed));
+    }
+
+    bool Application::OnWindowClosed(WindowClosedEvent& e)
+    {
+        m_Running = false;
+        return true;
     }
 
 }

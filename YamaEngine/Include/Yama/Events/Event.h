@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Yama/Core/Core.h"
+#include "Yama/Core/Common.h"
 #include <string>
 #include <functional>
 
@@ -82,12 +82,12 @@ namespace Yama
 
         }
 
-        template<typename T, typename F>
-        bool Dispatch(EventFn<F> fnCallback)
+        template<typename T>
+        bool Dispatch(EventFn<T> fnCallback)
         {
             if(m_Event.GetType() == T::GetStaticType())
             {
-                m_Event = fnCallback(static_cast<T&>(m_Event));
+                m_Event.m_Handled = fnCallback(static_cast<T&>(m_Event));
                 return true;
             }
 

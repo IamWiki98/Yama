@@ -4,26 +4,62 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Locate source files
+file (GLOB_RECURSE YamaEngine_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Include/*.h")
 file (GLOB_RECURSE YamaEngine_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp")
+
+# Include platform include files separately
+set (EXCLUDE_DIR "/Platform/")
+foreach (TMP_PATH ${YamaEngine_HEADERS})
+    string (FIND ${TMP_PATH} ${EXCLUDE_DIR} EXCLUDE_DIR_FOUND)
+    if (NOT ${EXCLUDE_DIR_FOUND} EQUAL -1)
+        list (REMOVE_ITEM YamaEngine_HEADERS ${TMP_PATH})
+    endif ()
+endforeach(TMP_PATH)
+
+# Include platform source files separately
+foreach (TMP_PATH ${YamaEngine_SOURCES})
+    string (FIND ${TMP_PATH} ${EXCLUDE_DIR} EXCLUDE_DIR_FOUND)
+    if (NOT ${EXCLUDE_DIR_FOUND} EQUAL -1)
+        list (REMOVE_ITEM YamaEngine_SOURCES ${TMP_PATH})
+    endif ()
+endforeach(TMP_PATH)
+
+# Platform specific
+if(WIN32)
+    message("Binding Windows files...")
+    file (GLOB_RECURSE Platform_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Include/Yama/Platform/*.h")
+    file (GLOB_RECURSE Platform_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Source/Yama/Platform/*.cpp")
+endif()
+
+message("${Platform_SOURCES}")
 
 # Choose build type(STATIC or SHARED) with setting -DENGINE_SHARED TRUE/FALSE
 option(ENGINE_SHARED "" FALSE)
 
 # Create library and add sources
-if(ENGINE_SHARED)
+if(TRUE)
+    message("Building shared library...")
     add_library (YamaEngine SHARED
+        ${YamaEngine_HEADERS}
         ${YamaEngine_SOURCES}
+        ${Platform_HEADERS}
+        ${Platform_SOURCES}
     )
 
     if(WIN32)
+        message("Adding DLL compile definitions...")
         target_compile_definitions(YamaEngine 
             PUBLIC "YM_PLATFORM_WINDOWS"
             PRIVATE "YM_BUILD_DLL"
         )
     endif()
 else()
+    message("Building static library...")
     add_library (YamaEngine STATIC
+        ${YamaEngine_HEADERS}
         ${YamaEngine_SOURCES}
+        ${Platform_HEADERS}
+        ${Platform_SOURCES}
     )
 endif()
 
