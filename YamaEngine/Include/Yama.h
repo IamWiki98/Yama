@@ -1,6 +1,7 @@
 ﻿#pragma once
-#include "Yama/Application.h"
+#include "Yama/Core/Application.h"
+#include "Yama/Core/Log.h"
 
 //------Entry Point ---------------------//
-#include "Yama/EntryPoint.h"
+#include "Yama/Core/EntryPoint.h"
 //---------------------------------------//

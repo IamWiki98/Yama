@@ -11,8 +11,9 @@ namespace Yama
         Application();
         virtual ~Application();
 
+        void OnEvent();
         void Run();
-    };
+    };    
 
     // Needs to be defined in client
     Application* CreateApplication();

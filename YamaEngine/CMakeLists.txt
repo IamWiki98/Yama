@@ -3,38 +3,40 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-set( HEADER_FILES
-    "Include/Yama.h"
-    "Include/Yama/Application.h"
-    "Include/Yama/Core.h"
-    "Include/Yama/EntryPoint.h"
-)
+# Locate source files
+file (GLOB_RECURSE YamaEngine_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp")
 
-set( SOURCE_FILES
-    Source/Yama/Application.cpp
-)
+# Choose build type(STATIC or SHARED) with setting -DENGINE_SHARED TRUE/FALSE
+option(ENGINE_SHARED "" FALSE)
 
-# Add source to this project's executable.
-add_library (YamaEngine SHARED
-    ${HEADER_FILES}
-    ${SOURCE_FILES}
-)
+# Create library and add sources
+if(ENGINE_SHARED)
+    add_library (YamaEngine SHARED
+        ${YamaEngine_SOURCES}
+    )
 
-if(WIN32)
-    target_compile_definitions(YamaEngine 
-        PUBLIC "YM_PLATFORM_WINDOWS"
-        PRIVATE "YM_BUILD_DLL"
+    if(WIN32)
+        target_compile_definitions(YamaEngine 
+            PUBLIC "YM_PLATFORM_WINDOWS"
+            PRIVATE "YM_BUILD_DLL"
+        )
+    endif()
+else()
+    add_library (YamaEngine STATIC
+        ${YamaEngine_SOURCES}
     )
 endif()
 
+# Make default build type = STATIC
+unset(ENGINE_SHARED CACHE)
+
+# Locate include files
 target_include_directories(YamaEngine
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 
 # Link GLEW
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/glew/build/cmake)
-target_include_directories(YamaEngine 
-PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/glew/include)
 target_link_libraries(YamaEngine glew_s)
 set_property(TARGET glew_s PROPERTY POSITION_INDEPENDENT_CODE ON)
 
@@ -55,11 +57,9 @@ target_link_libraries(YamaEngine OpenGL::GL)
 
 # Link GLM
 
-target_include_directories(YamaEngine 
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/External/glm
-)
-
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/glm)
 
-# TODO: Add tests and install targets if needed.
-#install (TARGETS YamaEngine DESTINATION ${CMAKE_BINARY_DIR}/bin)
+# Link spdlog
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/spdlog)
+target_link_libraries(YamaEngine spdlog)

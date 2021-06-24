@@ -9,3 +9,5 @@
 #else
     #define YAMA_API
 #endif
+
+#define BIT(x) (x << 1)

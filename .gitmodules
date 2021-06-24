@@ -1,0 +1,3 @@
+[submodule "YamaEngine/External/spdlog"]
+	path = YamaEngine/External/spdlog
+	url = https://github.com/gabime/spdlog
