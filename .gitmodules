@@ -1,3 +1,6 @@
 [submodule "YamaEngine/External/spdlog"]
 	path = YamaEngine/External/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "YamaEngine/External/imgui"]
+	path = YamaEngine/External/imgui
+	url = https://github.com/ocornut/imgui

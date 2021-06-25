@@ -74,6 +74,9 @@ target_include_directories(YamaEngine
 # Link GLEW
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/glew/build/cmake)
 target_link_libraries(YamaEngine glew_s)
+target_include_directories(YamaEngine 
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/glew/include
+)
 set_property(TARGET glew_s PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Link GLFW
@@ -100,3 +103,24 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/glm)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/External/spdlog)
 target_link_libraries(YamaEngine spdlog)
 set_property(TARGET spdlog PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+# Link ImGui
+
+set(IMGUI_SOURCES
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui/imgui.cpp
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui/imgui_demo.cpp
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui/imgui_draw.cpp
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui/imgui_tables.cpp
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui/imgui_widgets.cpp
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui/backends/imgui_impl_glfw.cpp
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui/backends/imgui_impl_opengl3.cpp
+)
+
+target_sources(YamaEngine
+    ${IMGUI_SOURCES}
+)
+
+target_include_directories(YamaEngine
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui/backends
+)

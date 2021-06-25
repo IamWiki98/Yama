@@ -5,6 +5,13 @@
 #include "Yama/Events/KeyEvent.h"
 #include "Yama/Events/MouseEvent.h"
 
+#ifndef GLEW_STATIC
+#define GLEW_STATIC
+#endif
+// GLEW needs to be included before gl.h
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 namespace Yama
 {
 
@@ -36,7 +43,7 @@ namespace Yama
         m_Data.m_Width = props.m_Width;
         m_Data.m_Height = props.m_Height;
         
-        YM_CORE_INFO("Creating window: \"{0}\" ({1}, {2})",
+        YM_CORE_INFO("Creating window... \"{0}\" ({1}, {2})",
          m_Data.m_Title, m_Data.m_Width, m_Data.m_Height);
 
         if(!s_GLFWInitialized)
@@ -50,6 +57,8 @@ namespace Yama
 
         m_Window = glfwCreateWindow((int)m_Data.m_Width, (int)m_Data.m_Height, m_Data.m_Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
+        GLenum status = glewInit();
+        YM_CORE_ASSERT(status == GLEW_NO_ERROR, "GLEW failed to initialize!");
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
@@ -97,6 +106,13 @@ namespace Yama
             }
         });
 
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            KeyTypedEvent event(keycode);
+            data.m_EventCallback(event);
+        });
+
         glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
         {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -131,10 +147,15 @@ namespace Yama
             MouseMovedEvent event((float)xPos, (float)yPos);
             data.m_EventCallback(event);
         });
+
+        unsigned int id;
+        glGenVertexArrays(1, &id);
     }
 
     void WindowsWindow::Shutdown()
     {
+        YM_CORE_INFO("Destroying window... \"{0}\" ({1}, {2})",
+         m_Data.m_Title, m_Data.m_Width, m_Data.m_Height);
         glfwDestroyWindow(m_Window);
     }
 
